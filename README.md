@@ -1,2 +1,2 @@
 # klotski
-Klotski solver written in C
+Klotski solver in C
