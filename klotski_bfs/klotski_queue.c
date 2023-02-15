@@ -1,4 +1,4 @@
-#include "queue.h"
+#include "klotski_queue.h"
 
 int is_full(struct queue *q)
 {

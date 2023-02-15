@@ -1,7 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "position.h"
+#include "klotski_position.h"
 
 typedef struct queue
 {
