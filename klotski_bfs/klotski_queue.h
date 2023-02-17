@@ -3,6 +3,9 @@
 
 #include "klotski_position.h"
 
+/**
+ * 
+*/
 typedef struct queue
 {
     POSITION *arr;
@@ -14,5 +17,6 @@ int is_full(struct queue *q);
 int is_empty(struct queue *q);
 int add(struct queue *q, POSITION value);
 int get(struct queue *q, POSITION *value);
+// /
 
 #endif // QUEUE_H
