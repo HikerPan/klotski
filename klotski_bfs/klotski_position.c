@@ -822,9 +822,9 @@ int is_visited(POSITION *pos)
 
 void print_position(POSITION *pos)
 {
-    for (int i = 0; i < BOARD_X; i++)
+    for (int i = 0; i < BOARD_Y; i++)
     {
-        for (int j = 0; j < BOARD_Y; j++)
+        for (int j = 0; j < BOARD_X; j++)
             printf("%d ", pos->mat[i][j]);
         printf("\n");
     }
@@ -834,27 +834,11 @@ void print_position(POSITION *pos)
 
 int is_good(POSITION *pos)
 {
-    // BLOCK b1 = {1, 3};
-    // BLOCK b2 = {2, 4};
-    // int pieces_index = 0;
-
-    if ((pos->mat[3][1] == MACHID_CAO) && (pos->mat[3][1] == pos->mat[3][2]) && (pos->mat[3][31] == pos->mat[4][1]) && (pos->mat[4][1] == pos->mat[4][2]))
+    if ((pos->mat[3][1] == MACHID_CAO) && (pos->mat[3][1] == pos->mat[3][2]) && (pos->mat[3][1] == pos->mat[4][1]) && (pos->mat[3][1] == pos->mat[4][2]))
         return 1;
 
     return 0;
 
-    // for (int i = 0; i < MAX_POSSIBLE_NEIGHBOURS; i++)
-    // {
-    //     if (MACHID_CAO == pos->pieces[i].mat_id)
-    //     {
-    //         pieces_index = i;
-    //         break;
-    //     }
-    // }
-    // if (is_block_in_piece(b1, &pos->pieces[pieces_index]) && is_block_in_piece(b2, &pos->pieces[pieces_index]))
-    //     return 1;
-
-    // return 0;
 }
 
 void print_next_step_map_solution(VISIT_MAP *map)

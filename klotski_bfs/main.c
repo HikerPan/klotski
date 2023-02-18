@@ -29,6 +29,30 @@ int main()
              {0},
              {0}}};
 
+    // POSITION root =
+    //     {
+    //         {{2, 1, 1, 2},
+    //          {2, 3, 3, 2},
+    //          {2, 4, 4, 2},
+    //          {2, 4, 4, 2},
+    //          {1, 0, 0, 1}},
+    //         {{1, MACHID_GENERAL_VERT, 2, {{0, 0}, {0, 1}}},
+    //          {2, MACHID_SOLIDER, 1, {{1, 0}}},
+    //          {3, MACHID_SOLIDER, 1, {{2, 0}}},
+    //          {4, MACHID_GENERAL_VERT, 2, {{3, 0}, {3, 1}}},
+    //          {5, MACHID_GENERAL_HORI, 2, {{1, 1}, {2, 1}}},
+    //          {6, MACHID_GENERAL_VERT, 2, {{0, 2}, {0, 3}}},
+    //          {7, MACHID_CAO, 4, {{1, 2},{2, 2},{1, 3},{2, 3}}},
+    //          {8, MACHID_GENERAL_VERT, 2, {{3, 2},{3, 3}}},
+    //          {9, MACHID_SOLIDER, 1, {{0, 4}}},
+    //          {10, MACHID_EMPTY, 1, {{1, 4}}},
+    //          {11, MACHID_EMPTY, 1, {{2, 4}}},
+    //          {12, MACHID_SOLIDER, 1, {{3, 4}}},
+    //          {0},
+    //          {0},
+    //          {0},
+    //          {0}}};
+
     bfs(root, 200);
 
     return 0;
@@ -60,6 +84,9 @@ void bfs(POSITION root, int max_depth)
         printf("visit_map_from_position fail.\r\n");
         return;
     }
+
+    printf("root is:\r\n");
+    print_position(&root);
 
     // 写入map缓存空间
     visit_map_write(&map);
