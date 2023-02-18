@@ -1,5 +1,4 @@
 #include "klotski_position.h"
-#include "klotski_list_queue.h"
 #include "string.h"
 
 void bfs(POSITION root, int max_depth);
@@ -13,23 +12,22 @@ int main()
              {2, 3, 3, 2},
              {2, 1, 1, 2},
              {1, 0, 0, 1}},
-            {{1, MACHID_GENERAL_VERT, 2, {{0, 0}, {1, 0}}},
-             {2, MACHID_CAO, 4, {{0, 1}, {0, 2}, {1, 1}, {1, 2}}},
-             {3, MACHID_GENERAL_VERT, 2, {{0, 3}, {1, 3}}},
-             {4, MACHID_GENERAL_VERT, 2, {{2, 0}, {3, 0}}},
-             {5, MACHID_GENERAL_HORI, 2, {{2, 1}, {2, 2}}},
-             {6, MACHID_GENERAL_VERT, 2, {{2, 3}, {3, 3}}},
-             {7, MACHID_SOLIDER, 1, {{3, 1}}},
-             {8, MACHID_SOLIDER, 1, {{3, 2}}},
-             {9, MACHID_SOLIDER, 1, {{4, 0}}},
-             {10, MACHID_EMPTY, 1, {{4, 1}}},
-             {11, MACHID_EMPTY, 1, {{4, 2}}},
-             {12, MACHID_SOLIDER, 1, {{4, 3}}},
+            {{1, MACHID_GENERAL_VERT, 2, {{0, 0}, {0, 1}}},
+             {2, MACHID_CAO, 4, {{1, 0}, {2, 0}, {1, 1}, {2, 1}}},
+             {3, MACHID_GENERAL_VERT, 2, {{3, 0}, {3, 1}}},
+             {4, MACHID_GENERAL_VERT, 2, {{0, 2}, {0, 3}}},
+             {5, MACHID_GENERAL_HORI, 2, {{1, 2}, {2, 2}}},
+             {6, MACHID_GENERAL_VERT, 2, {{3, 2}, {3, 3}}},
+             {7, MACHID_SOLIDER, 1, {{1, 3}}},
+             {8, MACHID_SOLIDER, 1, {{2, 3}}},
+             {9, MACHID_SOLIDER, 1, {{0, 4}}},
+             {10, MACHID_EMPTY, 1, {{1, 4}}},
+             {11, MACHID_EMPTY, 1, {{2, 4}}},
+             {12, MACHID_SOLIDER, 1, {{3, 4}}},
              {0},
              {0},
              {0},
-             {0}},
-            NULL};
+             {0}}};
 
     bfs(root, 200);
 
@@ -49,23 +47,30 @@ void bfs(POSITION root, int max_depth)
     VISIT_MAP map = {0};
     VISIT_MAP arr_map = {0};
 
+    // 初始化map空间
     if (!visit_map_init(VISIT_MAP_SIZE_MAX))
     {
         printf("visit map init fail.\r\n");
         return;
     }
 
-    if (!visit_map_from_position(&map, &root))
+    // 将root转化为map
+    if (!visit_map_and_pieces_from_matirx(&map, &root))
     {
         printf("visit_map_from_position fail.\r\n");
         return;
     }
+
+    // 写入map缓存空间
     visit_map_write(&map);
 
-    memset(&map, 0, sizeof(VISIT_MAP));
+    map.map_low = 0xFFFFFFFF;
+    map.map_high = 0xFFFF;
 
+    // 从缓存中读出map
     while (visit_map_read(&map))
     {
+        // 将map转化为postion结构
         position_from_visit_map(&pos, &map);
 
         // Cao 走到了出口位置

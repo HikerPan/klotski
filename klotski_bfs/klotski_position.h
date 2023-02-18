@@ -2,7 +2,7 @@
  * @Author: Alex
  * @Date: 2023-02-15 09:43:10
  * @LastEditors: hikerpan
- * @LastEditTime: 2023-02-16 22:02:47
+ * @LastEditTime: 2023-02-19 00:49:32
  * @FilePath: \klotski\klotski_bfs\klotski_position.h
  * @Description: 
  * @
@@ -14,26 +14,27 @@
 #include <stdlib.h>
 #define BLOCKS_IN_PIECE 4
 // #define PIECES_IN_POSITION 10
-#define PIECES_IN_POSITION 16
+#define MAX_POSSIBLE_PIECES_IN_POSITION 16
 #define MAX_POSSIBLE_NEIGHBOURS 16
 
-#define MAX 65536
 
-#define BOARD_X 5
-#define BOARD_Y 4
+#define BOARD_Y 5
+#define BOARD_X 4
 
-#define MACHID_NOT_USED             0
+#define MACHID_EMPTY                0
 #define MACHID_SOLIDER              1
 #define MACHID_GENERAL_VERT         2
 #define MACHID_GENERAL_HORI         3
 #define MACHID_CAO                  4
-#define MACHID_EMPTY                5
+#define MACHID_NOT_USED             7
 
 #define VISIT_MAP_SIZE_MAX          (15000)
 
 typedef struct block
 {
-    signed char x, y;
+    
+    signed char x;
+    signed char y;
 } BLOCK;
 
 typedef struct piece
@@ -46,17 +47,11 @@ typedef struct piece
 
 typedef struct position
 {
-    unsigned char mat[BOARD_X][BOARD_Y];
-    PIECE pieces[PIECES_IN_POSITION];
-    struct position *parent;
+    unsigned char mat[BOARD_Y][BOARD_X];
+    PIECE pieces[MAX_POSSIBLE_PIECES_IN_POSITION];
+    // struct position *parent;
 } POSITION;
 
-typedef struct visited_table
-{
-    unsigned char visited[BOARD_X][BOARD_Y];
-    struct visited_table *parent;
-    struct visited_table *next;
-}VISIT_TABLE;
 
 /**
  * 该数据结构用于压缩华容道棋盘布局
@@ -75,7 +70,6 @@ typedef struct visited_map
 }VISIT_MAP;
 
 
-int is_visited_empty(void);
 int is_good(POSITION *pos);
 void print_position(POSITION *pos);
 // void print_position(VISIT_TABLE *pos);
@@ -97,10 +91,8 @@ int is_block_in_piece(BLOCK b, PIECE *p);
 void print_solution(POSITION *p);
 int get_visited_num(void);
 
-int visit_table_from_position(VISIT_TABLE *vis, POSITION *pos);
 void pieces_from_matrix(POSITION *pos);
-int position_from_visit_table(POSITION *pos, VISIT_TABLE *vis);
-void print_next_step_solution(VISIT_TABLE *p_vis);
+
 
 int visit_map_init(int size);
 int visit_map_from_position(VISIT_MAP *map, POSITION *pos);
@@ -110,4 +102,7 @@ int visit_map_write(VISIT_MAP *map);
 int visit_map_get_parent_index(void);
 void print_next_step_map_solution(VISIT_MAP *map);
 int is_symmetric(POSITION *pos);
+
+int visit_map_and_pieces_from_matirx(VISIT_MAP *map, POSITION *pos);
+
 #endif // POSITION_H
