@@ -851,11 +851,12 @@ void print_next_step_map_solution(VISIT_MAP *map)
     parent_index = (cur_map.map_high >> 16) & 0xFFFF;
     while (parent_index)
     {
-        position_from_visit_map(&pos, map);
+        position_from_visit_map(&pos, &cur_map);
         print_position(&pos);
         memcpy(&cur_map, &g_visited_map[parent_index], sizeof(VISIT_MAP));
         parent_index = (cur_map.map_high >> 16) & 0xFFFF;
     }
+    position_from_visit_map(&pos, &cur_map);
     print_position(&pos);
 }
 

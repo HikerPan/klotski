@@ -70,6 +70,7 @@ void bfs(POSITION root, int max_depth)
     int elements_for_next_level = 0;
     VISIT_MAP map = {0};
     VISIT_MAP arr_map = {0};
+    int parent_index = 0;
 
     // 初始化map空间
     if (!visit_map_init(VISIT_MAP_SIZE_MAX))
@@ -119,9 +120,12 @@ void bfs(POSITION root, int max_depth)
             // if(!is_visited(&arr[i]))
             {
                 // 将pos转化为map
-                memset(&arr_map, 0, sizeof(VISIT_MAP));
+                // memset(&arr_map, 0, sizeof(VISIT_MAP));
+                arr_map.map_low = 0xFFFFFFFF;
+                arr_map.map_high = 0xFFFF;
                 visit_map_from_position(&arr_map, &arr[i]);
-                arr_map.map_high |= (visit_map_get_parent_index() << 16);
+                parent_index = visit_map_get_parent_index();
+                arr_map.map_high |= (parent_index<< 16);
                 visit_map_write(&arr_map);
                 real_n++;
             }
@@ -130,8 +134,8 @@ void bfs(POSITION root, int max_depth)
         free(arr);
 
         elements_for_next_level += real_n;
-        // if(current_depth == 87)
-        //     printf("Current level: %d\n", current_depth);
+        if(current_depth == 55)
+            printf("Current level: %d\n", current_depth);
         if (--elements_till_next_level == 0)
         {
             if (++current_depth > max_depth)
